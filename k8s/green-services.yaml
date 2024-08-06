@@ -1,0 +1,28 @@
+# k8s/green-services.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-active
+spec:
+  selector:
+    app: my-app
+    color: green
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-preview
+spec:
+  selector:
+    app: my-app
+    color: green
+  ports:
+    - protocol: TCP
+      port: 81
+      targetPort: 5000
+  type: ClusterIP

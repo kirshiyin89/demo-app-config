@@ -1,0 +1,28 @@
+# k8s/green-rollout.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: my-app-green
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    blueGreen:
+      activeService: my-app-active
+      previewService: my-app-preview
+      autoPromotionSeconds: 60
+  selector:
+    matchLabels:
+      app: my-app
+      color: green
+  template:
+    metadata:
+      labels:
+        app: my-app
+        color: green
+    spec:
+      containers:
+        - name: my-app
+          image: my-app:green
+          ports:
+            - containerPort: 5000
